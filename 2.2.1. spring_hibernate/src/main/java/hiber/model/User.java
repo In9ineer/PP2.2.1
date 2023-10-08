@@ -19,16 +19,17 @@ public class User {
    @Column(name = "email")
    private String email;
 
-   @OneToOne
-   @PrimaryKeyJoinColumn
-   private Car car;
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "car_id")
+   private Car userCar;
 
    public User() {}
    
-   public User(String firstName, String lastName, String email) {
+   public User(String firstName, String lastName, String email, String model, int series) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+      this.userCar = new Car(model, series);
    }
 
    public Long getId() {
@@ -63,11 +64,7 @@ public class User {
       this.email = email;
    }
 
-   public Car getCar() {
-      return car;
-   }
+   public Car getCar() { return userCar; }
 
-   public void setCar(Car car) {
-      this.car = car;
-   }
+   public void setCar(Car car) { this.userCar = car; }
 }
